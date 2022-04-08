@@ -5,10 +5,7 @@ import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,5 +17,9 @@ public class CommentController {
         commentDto.setUserNickname(user.getUserNickname());
         Comment comment = new Comment(commentDto);
         return commentRepository.save(comment);
+    }
+    @DeleteMapping("/api/comment/{commentId}")
+    public void deleteComment(@PathVariable("commentId") long commentId){
+        commentRepository.deleteById(commentId);
     }
 }

@@ -21,7 +21,7 @@ public class CommentController {
         );
 
         commentDto.setUserNickname(user.getUserNickname());
-        commentDto.setPostId(postId);
+//        commentDto.setPostId(postId);
         Comment comment = new Comment(commentDto);
         return commentRepository.save(comment);
     }

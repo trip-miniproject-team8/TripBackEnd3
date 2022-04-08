@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CommentController {
     private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
 
     @PostMapping("/api/comment/{postId}")
     public Comment createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user, @PathVariable Long postId){
+
+        postRepository.findById(postId).orElseThrow(
+                () -> new IllegalArgumentException("null")
+        );
+
         commentDto.setUserNickname(user.getUserNickname());
+        commentDto.setPostId(postId);
         Comment comment = new Comment(commentDto);
         return commentRepository.save(comment);
     }

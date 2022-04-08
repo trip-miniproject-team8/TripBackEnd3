@@ -10,5 +10,6 @@ public class CommentDto {
     private String userNickname;
     private String comment;
     private String createdAt;
+    private Long postId;
 
 }

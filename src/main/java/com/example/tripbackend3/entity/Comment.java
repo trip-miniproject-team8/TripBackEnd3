@@ -21,6 +21,10 @@ public class Comment extends Timestamped{
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="POST_ID")
+    private Post post;
+
     @Column(nullable = false)
     private String userNickname;
 
@@ -30,6 +34,13 @@ public class Comment extends Timestamped{
     public Comment(CommentDto commentDto) {
         this.comment = commentDto.getComment();
         this.userNickname = commentDto.getUserNickname();
+    }
+
+    public Comment(Post post, CommentDto commentDto, User user){
+        this.post = post;
+        this.userNickname = commentDto.getUserNickname();
+        this.comment = commentDto.getComment();
+        this.user = user;
     }
 
 }

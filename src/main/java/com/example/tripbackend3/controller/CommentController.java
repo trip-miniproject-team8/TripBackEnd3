@@ -4,6 +4,7 @@ import com.example.tripbackend3.dto.CommentDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
+import com.example.tripbackend3.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final CommentService commentService;
 
     @PostMapping("/api/comment/{postId}")
-    public Comment createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user, @PathVariable Long postId){
+    public void createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user, @PathVariable Long postId){
 
         postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("null")
@@ -23,7 +25,7 @@ public class CommentController {
         commentDto.setUserNickname(user.getUserNickname());
 //        commentDto.setPostId(postId);
         Comment comment = new Comment(commentDto);
-        return commentRepository.save(comment);
+        commentService.createComment(postId,commentDto,user);
     }
     @DeleteMapping("/api/comment/{commentId}")
     public void deleteComment(@PathVariable("commentId") long commentId){

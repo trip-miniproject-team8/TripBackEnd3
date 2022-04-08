@@ -9,6 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
+import javax.persistence.*;
+
 public class Comment extends Timestamped{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -29,4 +31,5 @@ public class Comment extends Timestamped{
         this.comment = commentDto.getComment();
         this.userNickname = commentDto.getUserNickname();
     }
+
 }

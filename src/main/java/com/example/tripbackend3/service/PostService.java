@@ -6,6 +6,7 @@ import com.example.tripbackend3.dto.PostReceiveDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
+import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -96,9 +97,10 @@ public class PostService {
         postRepository.deleteById(postId);
         //게시물 내에 댓글도 삭제
         //commentRepo에서 커스텀해줘야함.
-        commentRepository.deleteAllByPostId(postId);
+        commenRepository.deleteAllByPostId(postId);
     }
 
 
 
 }
+//제발 날라가지 마세요요

@@ -13,16 +13,26 @@ public class User {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @Column(name = "USER_ID")
+//    @Column(name = "USER_Id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String userNickname;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
     @Column(nullable = false, unique = true)
-    private String userId;
+    private String username;
 
+    public User(String username, String password, String userNickname) {
+        this.username = username;
+        this.password = password;
+        this.userNickname = userNickname;
+    }
+
+//    public User(String username, String password) {
+//        this.username = username;
+//        this.password = password;
+//    }
 }

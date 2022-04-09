@@ -19,7 +19,7 @@ public class Post extends Timestamped{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "POST_ID")
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String userNickname;
@@ -36,6 +36,7 @@ public class Post extends Timestamped{
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
+
 
 
 

@@ -9,8 +9,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-
-
 public class Comment extends Timestamped{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -24,6 +22,8 @@ public class Comment extends Timestamped{
     @ManyToOne
     @JoinColumn(name="POST_ID")
     private Post post;
+
+    //private Long post_id;
 
     @Column(nullable = false)
     private String userNickname;
@@ -41,6 +41,7 @@ public class Comment extends Timestamped{
         this.userNickname = commentDto.getUserNickname();
         this.comment = commentDto.getComment();
         this.user = user;
+        //this.post_id =post.getId();
     }
 
 }

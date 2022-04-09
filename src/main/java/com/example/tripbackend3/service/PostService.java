@@ -60,7 +60,7 @@ public class PostService {
         LocalDateTime createdAt=post.getCreatedAt();
         //댓글 쪽 repo에서 커스텀 필요
         //게시물 아이디에 해당하는 댓글이 다 나옴
-        List<Comment> comments=commentRepository.findAllByPostId(postId);
+        List<Comment> comments=commentRepository.findAllByPost(post);
         int commentCtn=comments.size();
         PostOneResponseDto postOneResponseDto =
                 new PostOneResponseDto(postId,userNickname, imageUrl, content,createdAt, commentCtn, comments);
@@ -71,7 +71,7 @@ public class PostService {
     @Transactional
     public void updatePost(Long postId, PostReceiveDto postReceiveDto, User user){
 
-        postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
+        Post post1= postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
                 ()-> new IllegalArgumentException("게시물 작성자만 수정할 수 있습니다.")
         );
 
@@ -80,7 +80,7 @@ public class PostService {
         String content=postReceiveDto.getContent();
         String imageUrl=postReceiveDto.getImageUrl();
         //commentRepo에서 커스텀해줘야함
-        List<Comment> comments=commentRepository.findAllByPostId(postId);
+        List<Comment> comments=commentRepository.findAllByPost(post1);
         int commentCtn=comments.size();
         postReceiveDto=new PostReceiveDto(userNickname,content,imageUrl,commentCtn);
         Post post=new Post(postReceiveDto, user);
@@ -91,13 +91,13 @@ public class PostService {
     public void deletePost(Long postId, User user) {
         //로그인한 유저와 해당 게시물 아이디로 조회 시 null값 반환한다면,
         //지금 삭제할려는 사람이 해당 게시물을 작성하지 않았다는 말이다.
-        postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
+        Post post = postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
                 ()-> new IllegalArgumentException("게시물 작성자만 삭제할 수 있습니다.")
         );
         postRepository.deleteById(postId);
         //게시물 내에 댓글도 삭제
         //commentRepo에서 커스텀해줘야함.
-        commentRepository.deleteAllByPostId(postId);
+        commentRepository.deleteAllByPost(post);
     }
 
 

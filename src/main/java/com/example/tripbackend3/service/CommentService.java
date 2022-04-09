@@ -23,7 +23,7 @@ public class CommentService {
     }
 
 
-//    @Transactional
+
     public void createComment(Long postId, CommentDto commentDto, User user) {
 
         Post post = postRepository.findById(postId).orElseThrow(

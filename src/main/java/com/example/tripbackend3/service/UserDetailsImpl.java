@@ -4,6 +4,7 @@ package com.example.tripbackend3.service;
 
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.entity.UserRoleEnum;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+//@Primary
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;

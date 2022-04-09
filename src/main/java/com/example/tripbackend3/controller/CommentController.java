@@ -2,14 +2,12 @@ package com.example.tripbackend3.controller;
 
 import com.example.tripbackend3.dto.CommentDto;
 import com.example.tripbackend3.entity.Comment;
-import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -32,7 +30,7 @@ public class CommentController {
         commentService.createComment(postId,commentDto,userDetails.getUser());
     }
     @DeleteMapping("/api/comment/{commentId}")
-    public void deleteComment(@PathVariable("commentId") long commentId){
+    public void deleteComment(@PathVariable("commentId") Long commentId){
         commentRepository.deleteById(commentId);
     }
 }

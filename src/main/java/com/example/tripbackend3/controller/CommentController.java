@@ -4,6 +4,7 @@ import com.example.tripbackend3.dto.CommentDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
+import com.example.tripbackend3.repository.PostRepository;
 import com.example.tripbackend3.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,3 +34,5 @@ public class CommentController {
         commentRepository.deleteById(commentId);
     }
 }
+
+// 테스트 한줄 추가

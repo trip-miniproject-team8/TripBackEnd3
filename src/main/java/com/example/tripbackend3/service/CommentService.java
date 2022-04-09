@@ -5,6 +5,7 @@ import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
+import com.example.tripbackend3.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

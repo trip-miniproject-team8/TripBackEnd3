@@ -69,7 +69,7 @@ public class PostService {
 
     //게시글 수정
     @Transactional
-    public void udpatePost(Long postId, PostReceiveDto postReceiveDto, User user){
+    public void updatePost(Long postId, PostReceiveDto postReceiveDto, User user){
 
         postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
                 ()-> new IllegalArgumentException("게시물 작성자만 수정할 수 있습니다.")
@@ -97,7 +97,7 @@ public class PostService {
         postRepository.deleteById(postId);
         //게시물 내에 댓글도 삭제
         //commentRepo에서 커스텀해줘야함.
-        commenRepository.deleteAllByPostId(postId);
+        commentRepository.deleteAllByPostId(postId);
     }
 
 

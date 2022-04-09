@@ -6,8 +6,10 @@ import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
 import com.example.tripbackend3.service.CommentService;
+import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -18,16 +20,16 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/api/comment/{postId}")
-    public void createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user, @PathVariable Long postId){
+    public void createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
 
         postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("null")
         );
 
-        commentDto.setUserNickname(user.getUserNickname());
+        commentDto.setUserNickname(userDetails.getUser().getUserNickname());
 //        commentDto.setPostId(postId);
         Comment comment = new Comment(commentDto);
-        commentService.createComment(postId,commentDto,user);
+        commentService.createComment(postId,commentDto,userDetails.getUser());
     }
     @DeleteMapping("/api/comment/{commentId}")
     public void deleteComment(@PathVariable("commentId") long commentId){

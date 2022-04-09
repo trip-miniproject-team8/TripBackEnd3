@@ -4,7 +4,9 @@ import com.example.tripbackend3.dto.PostAllResponseDto;
 import com.example.tripbackend3.dto.PostOneResponseDto;
 import com.example.tripbackend3.dto.PostReceiveDto;
 import com.example.tripbackend3.service.PostService;
+import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

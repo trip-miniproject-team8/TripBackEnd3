@@ -15,9 +15,9 @@ public class Comment extends Timestamped{
     @Column(name = "COMMENT_ID")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "USER_ID")
+//    private User user;
 
     @Column(nullable = false)
     private String userNickname;

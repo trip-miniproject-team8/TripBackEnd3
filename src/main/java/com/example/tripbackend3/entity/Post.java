@@ -12,11 +12,9 @@ public class Post extends Timestamped{
     @Column(name = "POST_ID")
     private Long Id;
 
-
 //    @ManyToOne
 //    @JoinColumn(name = "USER_ID")
 //    private User user;
-
 
     @Column(nullable = false)
     private String userNickname;

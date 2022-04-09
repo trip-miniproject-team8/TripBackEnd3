@@ -29,7 +29,7 @@ public class PostController {
     //게시글 전체 조회
     @GetMapping("/api/post")
     public List<PostAllResponseDto> showAllPost(){
-        List<PostAllResponseDto> posts=postService.showAllPost();
+        List<PostAllResponseDto> posts = postService.showAllPost();
         return posts;
     }
 

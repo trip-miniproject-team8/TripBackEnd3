@@ -24,21 +24,28 @@
                 box.style.display = "none";
             }
         }
+
+        function login(){
+
+        }
     </script>
 </head>
 <body>
 <div id="login-form">
     <div id="login-title">Sign up Select Shop</div>
 
-    <form action="/user/signup" method="post">
+    <form action="/api/signup" method="post">
         <div class="login-id-label">Username</div>
         <input type="text" name="username" placeholder="Username" class="login-input-box">
 
         <div class="login-id-label">Password</div>
         <input type="password" name="password" class="login-input-box">
 
-        <div class="login-id-label">E-mail</div>
-        <input type="text" name="email" placeholder="E-mail" class="login-input-box">
+        <div class="login-id-label">비밀번호확인</div>
+        <input type="password" name="passwordCheck" class="login-input-box">
+
+        <div class="login-id-label">닉네임</div>
+        <input type="text" name="userNickname" class="login-input-box">
 
         <div>
             <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자

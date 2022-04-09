@@ -2,21 +2,16 @@ package com.example.tripbackend3.controller;
 
 
 
-import com.example.tripbackend3.dto.IdCheckDto;
-import com.example.tripbackend3.dto.IdCheckRequestDto;
-import com.example.tripbackend3.dto.LoginDto;
-import com.example.tripbackend3.dto.SignupRequestDto;
-import com.example.tripbackend3.service.UserDetailsImpl;
+import com.example.tripbackend3.dto.*;
+import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -34,7 +29,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    //회원가입
+    // 로그인
+    @PostMapping("/user/login")
+    public User login(@RequestBody LoginDto loginDto) {
+        return userService.login(loginDto);
+    }
+
+
+
+        //회원가입
     @PostMapping("/api/signup")
     public void registerUser(@Valid @RequestBody SignupRequestDto requestDto){
         userService.registerUser(requestDto);

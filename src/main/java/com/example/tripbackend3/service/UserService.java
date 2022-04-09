@@ -2,9 +2,7 @@ package com.example.tripbackend3.service;
 
 
 
-import com.example.tripbackend3.dto.IdCheckDto;
-import com.example.tripbackend3.dto.IdCheckRequestDto;
-import com.example.tripbackend3.dto.SignupRequestDto;
+import com.example.tripbackend3.dto.*;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,40 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //회원가입
+    public User login(LoginDto loginDto){
+
+        User user = userRepository.findByUsername(loginDto.getUsername()).orElseThrow(
+                ()-> new IllegalArgumentException());
+            if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+                throw new IllegalArgumentException();
+            }
+
+       return user;
+
+    }
+
+    //로그인
+//    public ReturnUser login(LoginDto loginDto) {
+//        ReturnUser returnUser = new ReturnUser();
+//        try {
+//
+//            User member = userRepository.findByUsername(loginDto.getUsername())
+//                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID 입니다."));
+//            if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {
+//                throw new IllegalArgumentException("비밀번호를 다시 확인해 주세요.");
+//            }
+//            returnUser.setToken(jwtTokenProvider.createToken(member.getUsername()));
+//            returnUser.setUsername(member.getUsername());
+//            returnUser.setNickname(member.getNickname());
+//            return returnUser;
+//        } catch (IllegalArgumentException e) {
+//            returnUser.setMsg(e.getMessage());
+//            return returnUser;
+//        }
+//    }
+
+
+   //회원가입
     public void registerUser(SignupRequestDto requestDto) {
         
         String username = requestDto.getUsername();

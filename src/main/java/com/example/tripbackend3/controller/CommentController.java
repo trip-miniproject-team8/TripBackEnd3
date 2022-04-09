@@ -6,6 +6,7 @@ import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

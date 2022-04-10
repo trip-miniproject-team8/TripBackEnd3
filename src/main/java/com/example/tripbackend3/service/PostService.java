@@ -84,6 +84,7 @@ public class PostService {
         int commentCtn=comments.size();
         postReceiveDto=new PostReceiveDto(userNickname,content,imageUrl,commentCtn);
         Post post=new Post(postReceiveDto, user);
+        postRepository.save(post);
     }
 
     //게시물 삭제

@@ -1,6 +1,7 @@
 package com.example.tripbackend3.service;
 
 import com.example.tripbackend3.dto.CommentDto;
+import com.example.tripbackend3.dto.CommentRequestDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
@@ -24,14 +25,13 @@ public class CommentService {
 
 
 
-    public void createComment(Long postId, CommentDto commentDto, User user) {
+    public void createComment(Long postId, CommentRequestDto requestDto,User user) {
 
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("null")
         );
-        Comment comment = new Comment(post,commentDto,user);
+        Comment comment = new Comment(post,requestDto,user);
         commentRepository.save(comment);
-
     }
 
 }

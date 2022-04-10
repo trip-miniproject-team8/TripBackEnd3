@@ -2,6 +2,7 @@ package com.example.tripbackend3.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -29,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-    // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
+        // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
         web
                 .ignoring()
                 .antMatchers("/h2-console/**");
@@ -117,9 +118,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+    // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
 //        http.csrf()
 //                .ignoringAntMatchers("/user/**");
 
@@ -134,22 +135,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .anyRequest().authenticated()
 //                .and()
 //                // 로그인 기능
+//        http
+//                .csrf().disable()
+//                .cors().disable()
+//                .formLogin()
+//                .successHandler(new LoginAuthHandler())
+////                .loginPage("/user/login")
+////                .defaultSuccessUrl("/")
+////                .failureUrl("/user/login?error")
+//                .permitAll()
+//                .and()
+//                // 로그아웃 기능
+//                .logout()
+//                .permitAll();
+//        final ExpressionUrlAuthorizationConfigurer <HttpSecurity>.ExpressionInterceptUrlRegistry expressionInterceptUrlRegistry = http.authorizeRequests();
+//        expressionInterceptUrlRegistry.antMatchers("/api/signup").permitAll();
+
+
+//    }
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
-                .cors().disable()
-                .formLogin()
-                .successHandler(new LoginAuthHandler())
-//                .loginPage("/user/login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/user/login?error")
-                .permitAll()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()
-                // 로그아웃 기능
-                .logout()
-                .permitAll();
-        final ExpressionUrlAuthorizationConfigurer <HttpSecurity>.ExpressionInterceptUrlRegistry expressionInterceptUrlRegistry = http.authorizeRequests();
-        expressionInterceptUrlRegistry.antMatchers("/api/signup").permitAll();
-
-
+                .authorizeRequests()
+                .antMatchers("/api/comment/**").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .and()
+                .formLogin().disable()
+        ;
     }
 }

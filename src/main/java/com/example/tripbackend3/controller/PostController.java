@@ -20,6 +20,9 @@ public class PostController {
     //게시글 저장
     @PostMapping("/api/post")
     public void savePost(@RequestBody PostReceiveDto postReceiveDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+        System.out.println(userDetails.getUsername());
+        System.out.println(userDetails.getUser());
         if(userDetails.getUser()==null){
             throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
         }
@@ -42,11 +45,11 @@ public class PostController {
 
     //게시글 수정
     @PutMapping("/api/post/{postId}")
-    public void updatePost(@PathVariable Long id, @RequestBody PostReceiveDto postReceiveDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void updatePost(@PathVariable Long postId, @RequestBody PostReceiveDto postReceiveDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails.getUser()==null){
             throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
         }
-        postService.updatePost(id, postReceiveDto, userDetails.getUser());
+        postService.updatePost(postId, postReceiveDto, userDetails.getUser());
 
     }
 

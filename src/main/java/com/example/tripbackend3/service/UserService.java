@@ -30,7 +30,7 @@ public class UserService {
     public User login(LoginDto loginDto){
 
         User user = userRepository.findByUsername(loginDto.getUsername()).orElseThrow(
-                ()-> new IllegalArgumentException());
+                IllegalArgumentException::new);
             if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
                 throw new IllegalArgumentException();
             }
@@ -39,25 +39,7 @@ public class UserService {
 
     }
 
-    //로그인
-//    public ReturnUser login(LoginDto loginDto) {
-//        ReturnUser returnUser = new ReturnUser();
-//        try {
-//
-//            User member = userRepository.findByUsername(loginDto.getUsername())
-//                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ID 입니다."));
-//            if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword())) {
-//                throw new IllegalArgumentException("비밀번호를 다시 확인해 주세요.");
-//            }
-//            returnUser.setToken(jwtTokenProvider.createToken(member.getUsername()));
-//            returnUser.setUsername(member.getUsername());
-//            returnUser.setNickname(member.getNickname());
-//            return returnUser;
-//        } catch (IllegalArgumentException e) {
-//            returnUser.setMsg(e.getMessage());
-//            return returnUser;
-//        }
-//    }
+
 
 
    //회원가입
@@ -90,5 +72,12 @@ public class UserService {
       return idCheckDto;
     }
 
+
+    public User readUser(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                ()-> new IllegalArgumentException("")
+        );
+        return user;
+    }
 
 }

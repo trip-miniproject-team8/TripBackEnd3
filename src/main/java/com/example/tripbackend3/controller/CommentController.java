@@ -1,6 +1,7 @@
 package com.example.tripbackend3.controller;
 
 import com.example.tripbackend3.dto.CommentDto;
+import com.example.tripbackend3.dto.CommentRequestDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
@@ -17,17 +18,18 @@ public class CommentController {
     private final PostRepository postRepository;
     private final CommentService commentService;
 
+
     @PostMapping("/api/comment/{postId}")
-    public void createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
-
-        postRepository.findById(postId).orElseThrow(
-                () -> new IllegalArgumentException("null")
-        );
-
-        commentDto.setUserNickname(userDetails.getUser().getUserNickname());
-//        commentDto.setPostId(postId);
-        Comment comment = new Comment(commentDto);
-        commentService.createComment(postId,commentDto,userDetails.getUser());
+    public void createComment(@RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails,@PathVariable Long postId){
+//        System.out.println(userDetails.getUsername());
+//        postRepository.findById(postId).orElseThrow(
+//                () -> new IllegalArgumentException("null")
+//        );
+//        requestDto.setUserNickname(userDetails.getUserNickName());
+        if(userDetails.getUser()==null){
+            throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
+        }
+        commentService.createComment(postId,requestDto,userDetails.getUser());
     }
     @DeleteMapping("/api/comment/{commentId}")
     public void deleteComment(@PathVariable("commentId") Long commentId){

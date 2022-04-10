@@ -1,6 +1,7 @@
 package com.example.tripbackend3.entity;
 
 import com.example.tripbackend3.dto.CommentDto;
+import com.example.tripbackend3.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,17 +32,13 @@ public class Comment extends Timestamped{
     @Column(nullable = false)
     private String comment;
 
-    public Comment(CommentDto commentDto) {
-        this.comment = commentDto.getComment();
-        this.userNickname = commentDto.getUserNickname();
+    public Comment(Post post, CommentRequestDto requestDto, User user) {
+        this.post = post;
+        this.userNickname = user.getUserNickname();
+        this.comment = requestDto.getComment();
+        this.user = user;
     }
 
-    public Comment(Post post, CommentDto commentDto, User user){
-        this.post = post;
-        this.userNickname = commentDto.getUserNickname();
-        this.comment = commentDto.getComment();
-        this.user = user;
-        //this.post_id =post.getId();
-    }
+
 
 }

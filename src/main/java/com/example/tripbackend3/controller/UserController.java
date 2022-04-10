@@ -1,20 +1,19 @@
 package com.example.tripbackend3.controller;
 
-
-
 import com.example.tripbackend3.dto.*;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
-
+import java.util.Collections;
 
 
 @RestController
@@ -22,7 +21,8 @@ public class UserController {
 
     private final UserService userService;
 
-
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Autowired
     public UserController(UserService userService) {
@@ -30,12 +30,28 @@ public class UserController {
     }
 
     // 로그인
-    @PostMapping("/user/login")
-    public User login(@RequestBody LoginDto loginDto) {
-        return userService.login(loginDto);
+//    @PostMapping("/user/login")
+//    public User login(@RequestBody LoginDto loginDto) {
+//        return userService.login(loginDto);
+//    }
+
+    @RequestMapping(value="/user/login", method=RequestMethod.POST)
+    public AuthenticationToken login(
+            @RequestBody AuthenticationRequest authenticationRequest,
+            HttpSession session
+    ) {
+        String username = authenticationRequest.getUsername();
+        String password = authenticationRequest.getPassword();
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                SecurityContextHolder.getContext());
+
+        User user = userService.readUser(username);
+        return new AuthenticationToken(user.getUsername(), Collections.singleton(user.getUserNickname()), session.getId());
     }
-
-
 
         //회원가입
     @PostMapping("/api/signup")

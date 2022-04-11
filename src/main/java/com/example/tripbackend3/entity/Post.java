@@ -22,7 +22,7 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String userNickname;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imageUrl;
 
     @Column(nullable = false, length = 500)

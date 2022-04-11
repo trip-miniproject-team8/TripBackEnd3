@@ -6,11 +6,16 @@ import com.example.tripbackend3.dto.PostReceiveDto;
 import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;
+import com.example.tripbackend3.service.S3Uploader;
+import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +24,7 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final S3Uploader s3Uploader;
 
     //게시글 저장
     @PostMapping("/api/post")
@@ -66,4 +72,13 @@ public class PostController {
         postService.deletePost(postId, userDetails.getUser());
     }
 
-}
+    //    이미지 업로드
+    @PostMapping("/api/image")
+    public ResponseEntity<String> updateUserImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        System.out.println(multipartFile);
+        String image = s3Uploader.uploadFile(multipartFile, "static");
+        return ResponseEntity
+                .ok()
+                .body(image);
+
+    }

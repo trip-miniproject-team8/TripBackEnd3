@@ -1,13 +1,11 @@
 package com.example.tripbackend3.entity;
 
 import com.example.tripbackend3.dto.PostReceiveDto;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @NoArgsConstructor
@@ -18,7 +16,7 @@ public class Post extends Timestamped{
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @Column(name = "POST_ID")
+    @Column
     private Long id;
 
     @Column(nullable = false)
@@ -34,7 +32,7 @@ public class Post extends Timestamped{
     private int commentCtn;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name="User_Id")
     private User user;
 
 

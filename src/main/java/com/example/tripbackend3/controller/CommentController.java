@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CommentController {
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
     private final CommentService commentService;
 
 

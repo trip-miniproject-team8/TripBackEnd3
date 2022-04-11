@@ -13,4 +13,10 @@ public class TripBackEnd3Application {
 
     }
 
+//    public static void main(String[] args) {
+//        new SpringApplicationBuilder(TripBackEnd3Application.class)
+//                .properties(APPLICATION_LOCATIONS)
+//                .run(args);
+//    }
+
 }

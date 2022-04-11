@@ -8,7 +8,9 @@ import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Setter
 @Service
 public class PostService {
 
@@ -101,8 +104,6 @@ public class PostService {
         //commentRepo에서 커스텀해줘야함.
         commentRepository.deleteAllByPost(post);
     }
-
-
 
 }
 //제발 날라가지 마세요요

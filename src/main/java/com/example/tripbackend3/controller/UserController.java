@@ -49,6 +49,7 @@ public class UserController {
     ) {
         String username = authenticationRequest.getUsername();
         String password = authenticationRequest.getPassword();
+        ..
         //AuthenticationFilter
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);

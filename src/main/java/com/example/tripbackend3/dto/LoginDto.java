@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LoginDto {
     private String username;
-    private String password;
+
 //
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {

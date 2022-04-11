@@ -20,7 +20,7 @@ public class CommentController {
 
 
     @PostMapping("/api/comment/{postId}")
-    public void createComment(@RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails,@PathVariable Long postId){
+    public void createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails,@PathVariable Long postId){
 //        System.out.println(userDetails.getUsername());
 //        postRepository.findById(postId).orElseThrow(
 //                () -> new IllegalArgumentException("null")

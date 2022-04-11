@@ -6,12 +6,12 @@ public class AuthenticationToken {
 
     private String username;
     private Collection authorities;
-    private String token;
+    private String jsessionid;
 
     public AuthenticationToken(String username, Collection collection, String token) {
         this.username = username;
         this.authorities = collection;
-        this.token = token;
+        this.jsessionid = token;
     }
 
     public String getUsername() {
@@ -26,10 +26,10 @@ public class AuthenticationToken {
     public void setAuthorities(Collection authorities) {
         this.authorities = authorities;
     }
-    public String getToken() {
-        return token;
+    public String getJsessionid() {
+        return jsessionid;
     }
     public void setToken(String token) {
-        this.token = token;
+        this.jsessionid = token;
     }
 }

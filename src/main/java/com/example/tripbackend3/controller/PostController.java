@@ -1,14 +1,18 @@
 package com.example.tripbackend3.controller;
 
+import com.example.tripbackend3.dto.CommentRequestDto;
 import com.example.tripbackend3.dto.PostAllResponseDto;
 import com.example.tripbackend3.dto.PostOneResponseDto;
 import com.example.tripbackend3.dto.PostReceiveDto;
+import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;
 import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     //게시글 저장
     @PostMapping("/api/post")
@@ -55,10 +60,11 @@ public class PostController {
 
     //게시글 삭제
     @DeleteMapping("/api/post/{postId}")
-    public void deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails.getUser()==null){
             throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
         }
-        postService.deletePost(id, userDetails.getUser());
+        postService.deletePost(postId, userDetails.getUser());
     }
+
 }

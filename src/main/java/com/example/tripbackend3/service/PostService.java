@@ -81,6 +81,7 @@ public class PostService {
         String imageUrl=postReceiveDto.getImageUrl();
         //commentRepo에서 커스텀해줘야함
         List<Comment> comments=commentRepository.findAllByPost(post1);
+
         int commentCtn=comments.size();
         postReceiveDto=new PostReceiveDto(userNickname,content,imageUrl,commentCtn);
         Post post=new Post(postReceiveDto, user);

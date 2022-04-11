@@ -40,5 +40,16 @@ public class Comment extends Timestamped{
     }
 
 
+    public Comment(Post post, CommentRequestDto requestDto, String userNickname) {
+        this.post = post;
+        this.userNickname = userNickname;
+        this.comment = requestDto.getComment();
+    }
 
+    public Comment(Post post, CommentRequestDto requestDto, String userNickname, User user) {
+        this.post = post;
+        this.userNickname = userNickname;
+        this.comment = requestDto.getComment();
+//        this.user = user;
+    }
 }

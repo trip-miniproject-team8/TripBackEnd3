@@ -13,7 +13,7 @@ public class User {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-//    @Column(name = "USER_Id")
+//    @Column(name = "USER_ID")
     private Long id;
 
     @Column
@@ -30,6 +30,8 @@ public class User {
         this.password = password;
         this.userNickname = userNickname;
     }
+
+
 
 //    public User(String username, String password) {
 //        this.username = username;

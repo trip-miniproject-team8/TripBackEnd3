@@ -2,6 +2,7 @@ package com.example.tripbackend3.repository;
 
 
 import com.example.tripbackend3.entity.Post;
+import com.example.tripbackend3.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

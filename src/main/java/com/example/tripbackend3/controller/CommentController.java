@@ -1,8 +1,6 @@
 package com.example.tripbackend3.controller;
 
-import com.example.tripbackend3.dto.CommentDto;
 import com.example.tripbackend3.dto.CommentRequestDto;
-import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
 import com.example.tripbackend3.service.CommentService;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CommentController {
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
     private final CommentService commentService;
 
 

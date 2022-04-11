@@ -1,21 +1,16 @@
 package com.example.tripbackend3.controller;
 
 import com.example.tripbackend3.dto.*;
-import com.example.tripbackend3.dto.response.Message;
-import com.example.tripbackend3.dto.response.SignupResponseDto;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.service.UserDetailsImpl;
 import com.example.tripbackend3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;

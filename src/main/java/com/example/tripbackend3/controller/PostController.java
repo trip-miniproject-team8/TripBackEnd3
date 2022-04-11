@@ -34,6 +34,7 @@ public class PostController {
         postService.savePost(postReceiveDto,userDetails.getUser());
 
     }
+
     //게시글 전체 조회
     @GetMapping("/api/post")
     public List<PostAllResponseDto> showAllPost(){

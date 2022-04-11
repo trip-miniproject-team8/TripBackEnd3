@@ -52,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/comment/**").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .and()
-                .formLogin().disable()
-        ;
+                .formLogin().disable();
     }
 }

@@ -16,7 +16,7 @@ public class LoginAuthHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setStatus(HttpStatus.OK.value());
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(60);
+        session.setMaxInactiveInterval(3600);
         //response.sendRedirect("http://localhost:8080/api/login/success");
     }
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>게시물 수정 페이지</title>
+    <script>
+
+        function updatePost(){
+            let content=$('#content').val();
+            let imageUrl=$('#imageUrl').val();
+            let postId=$('#postId').val();
+
+            console.log(content, imageUrl, postId);
+            let data={"content":content, "imageUrl":imageUrl, "postId":postId};
+            $.ajax({
+                type:"PUT",
+                url:`/api/post/${postId}`,
+                contentType:"application/json",
+                data:JSON.stringify(data),
+                success:function (response){
+                    alert("게시물수정 완료");
+                    window.location.href="/";
+                }
+            })
+        }
+
+        function deletePost(){
+            let postId=$('#postId').val();
+            $.ajax({
+                type:"DELETE",
+                url:`/api/post/${postId}`,
+                contentType:"application/json",
+                data:JSON.stringify({"postId":postId}),
+                success:function (response){
+                    alert("게시물 삭제 완료");
+                    window.location.href="/";
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>게시물 수정 페이지</h1>
+
+    <div>
+    콘텐트
+    <input type="text" id="content" name="content" placeholder="content" class="content">
+    </div>
+
+    <div>
+    이미지
+    <input type="text" id="imageUrl" name="imageUrl" class="imageUrl">
+    </div>
+
+    <div>
+    수정/삭제제할 게시물 번호
+    <input type="text" id="postId" name="postId" class="postId">
+    </div>
+
+    <div>
+    <button id="content-submit" onclick="updatePost();" >작성 완료</button>
+    <button id="content-delete-submit" onclick="deletePost();" >게시글 삭제</button>
+    </div>
+
+    <div>
+        <button onclick="location.href='/'">메인 페이지 이동</button>
+    </div>
+
+</body>
+</html>

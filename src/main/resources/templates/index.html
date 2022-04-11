@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:title" content="00만의 셀렉샵">
+    <meta property="og:description" content="관심상품을 선택하고, 최저가 알림을 확인해보세요!">
+    <meta property="og:image" content="images/og_selectshop.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <title>나만의 셀렉샵</title>
+    <script>
+        $(document).ready(function(){
+            getPosts();
+        })
+        function getPosts(){
+            $.ajax({
+                type:"GET",
+                url:"/api/post",
+                contentType:"application/json",
+                success:function (response){
+                    for(let i=0; i<response.length;i++){
+                        let postId=response[i].id;
+                        let userNickname= response[i].userNickname;
+                        let content= response[i].content;
+                        let imageUrl= response[i].imageUrl;
+                        let createdAt= response[i].createdAt;
+                        let commentCtn= response[i].commentCtn;
+
+                        let temp=`<div>
+                                      <p>${postId}</p>
+                                      <p>${userNickname}</p>
+                                      <p>${content}</p>
+                                      <p>${imageUrl}</p>
+                                      <p>${createdAt}</p>
+                                      <p>${commentCtn}</p>
+                                  </div>
+                                  <hr>`
+                        $('#post-box').append(temp);
+                    }
+                }
+            })
+        }
+        function getdetails(){
+
+        }
+    </script>
+</head>
+<body>
+    <h1>메인페이지</h1>
+    <hr>
+    <div>
+        <button onclick="location.href='/page/post'">게시물 작성</button>
+        <button onclick="location.href='/page/update'">게시물 수정</button>
+        <button onclick="location.href='/page/reply'">댓글 작성</button>
+        <button onclick="location.href='/page/reply/delete'">댓글 삭제</button>
+    </div>
+
+    <div id="post-box">
+
+    </div>
+</body>
+</html>

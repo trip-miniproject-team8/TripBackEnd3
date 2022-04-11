@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>댓글 삭제 페이지</title>
+    <script>
+
+        function deleteReply(){
+            let commentId=$('#commentId').val();
+
+            console.log(commentId);
+            let data={"commentId":commentId};
+            $.ajax({
+                type:"DELETE",
+                url:`/api/comment/${commentId}`,
+                contentType:"application/json",
+                data:JSON.stringify(data),
+                success:function (response){
+                    alert("댓글삭제 완료");
+                    window.location.href="/";
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>댓글 삭제 페이지</h1>
+
+    <div>
+    삭제할 댓글 번호
+    <input type="text" id="commentId" name="commentId" placeholder="commentId" class="commentId">
+    </div>
+
+
+    <div>
+    <button id="content-submit" onclick="deleteReply()" >삭제</button>
+    </div>
+
+    <div>
+        <button onclick="location.href='/'">메인 페이지 이동</button>
+    </div>
+
+</body>
+</html>

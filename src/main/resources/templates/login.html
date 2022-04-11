@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+</head>
+<body>
+    <h1>로그인 페이지</h1>
+
+    <form method="post" action="/user/login">
+        유저네임
+        <input type="text" id="username" name="username" placeholder="Username" class="login-input-box">
+
+        비밀번호
+        <input type="password" id="password" name="password" class="login-input-box">
+        <button type="submit">제출</button>
+    </form>
+
+    <div>
+        <button onclick="location.href='/user/signup'">회원가입 페이지 이동</button>
+    </div>
+
+</body>
+<script>
+
+    function onLogin() {
+        let username=$('#username').val();
+        let password=$('#password').val();
+        let data={username:username, password:password};
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function () {
+                alert("로그인성공!")
+            }
+        })
+    }
+
+
+
+
+
+
+</script>
+</html>

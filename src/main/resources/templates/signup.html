@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <script>
+
+        function signup(){
+            let username=$('#username').val();
+            let userNickname=$('#userNickname').val();
+            let password=$('#password').val();
+            let passwordCheck=$('#passwordCheck').val();
+            console.log(username, userNickname,password);
+            let data={"username":username, "userNickname":userNickname, "password":password, "passwordCheck":passwordCheck};
+            $.ajax({
+                type:"POST",
+                url:"/api/signup",
+                contentType:"application/json",
+                data:JSON.stringify(data),
+                success:function (response){
+                    console.log(response);
+                    alert("회원가입 완료");
+                    window.location.href="/user/login";
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>회원가입 페이지</h1>
+
+    <div>
+    유저네임
+    <input type="text" id="username" name="username" placeholder="Username" class="login-input-box">
+    </div>
+
+    <div>
+    닉네임
+    <input type="text" id="userNickname" name="userNickname" class="login-input-box">
+    </div>
+
+    <div>
+    비밀번호
+    <input type="password" id="password" name="password" class="login-input-box">
+    </div>
+
+    </div>
+    비번확인
+    <input type="password" id="passwordCheck" name="passwordCheck" class="login-input-box">
+    </div>
+
+    <div>
+    <button id="login-id-submit" onclick="signup()" >회원 가입</button>
+    </div>
+
+</body>
+</html>

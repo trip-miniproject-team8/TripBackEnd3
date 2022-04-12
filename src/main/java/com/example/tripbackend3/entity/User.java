@@ -31,8 +31,4 @@ public class User {
         this.userNickname = userNickname;
     }
 
-//    public User(String username, String password) {
-//        this.username = username;
-//        this.password = password;
-//    }
 }

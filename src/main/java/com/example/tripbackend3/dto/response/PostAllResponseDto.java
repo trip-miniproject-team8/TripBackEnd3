@@ -1,22 +1,21 @@
-package com.example.tripbackend3.dto;
+package com.example.tripbackend3.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@Setter
-public class CommentDto {
+public class PostAllResponseDto {
 
+    private Long id;
     private String userNickname;
-    private String comment;
+    private String imageUrl;
+    private String content;
     private LocalDateTime createdAt;
-//    private String user;
-
+    private int commentCtn;
 
 }

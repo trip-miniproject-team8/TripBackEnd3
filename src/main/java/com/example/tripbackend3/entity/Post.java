@@ -1,7 +1,7 @@
 package com.example.tripbackend3.entity;
 
-import com.example.tripbackend3.dto.ImageRequestDto;
-import com.example.tripbackend3.dto.PostReceiveDto;
+import com.example.tripbackend3.dto.request.ImageRequestDto;
+import com.example.tripbackend3.dto.response.PostReceiveDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package com.example.tripbackend3.entity;
 
-import com.example.tripbackend3.dto.CommentDto;
-import com.example.tripbackend3.dto.CommentRequestDto;
+import com.example.tripbackend3.dto.request.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

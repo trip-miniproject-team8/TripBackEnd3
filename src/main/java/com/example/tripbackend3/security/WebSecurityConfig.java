@@ -72,8 +72,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 서버에서 인증은 JWT로 인증하기 때문에 Session의 생성을 막습니다.
         http
+                .httpBasic().disable()//rest api 만을 고려하여 기본 설정은 해제하겠습니다.
+                .exceptionHandling()
+                .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//토크 기반이라 세션 사용 해제.
 
         /*
          * 1.
@@ -146,6 +149,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/api/signup");
+        skipPathList.add("POST,/api/**");
 
         skipPathList.add("GET,/");
         skipPathList.add("GET,/basic.js");

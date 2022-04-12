@@ -1,4 +1,4 @@
-package com.example.tripbackend3.dto;
+package com.example.tripbackend3.dto.response;
 
 import java.util.Collection;
 

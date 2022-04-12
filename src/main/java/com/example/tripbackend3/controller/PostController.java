@@ -1,9 +1,9 @@
 package com.example.tripbackend3.controller;
 
-import com.example.tripbackend3.dto.ImageRequestDto;
-import com.example.tripbackend3.dto.PostAllResponseDto;
-import com.example.tripbackend3.dto.PostOneResponseDto;
-import com.example.tripbackend3.dto.PostReceiveDto;
+import com.example.tripbackend3.dto.request.ImageRequestDto;
+import com.example.tripbackend3.dto.response.PostAllResponseDto;
+import com.example.tripbackend3.dto.response.PostOneResponseDto;
+import com.example.tripbackend3.dto.response.PostReceiveDto;
 import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;

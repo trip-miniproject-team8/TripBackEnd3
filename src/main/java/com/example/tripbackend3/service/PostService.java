@@ -1,12 +1,15 @@
 package com.example.tripbackend3.service;
 
-import com.example.tripbackend3.dto.*;
+import com.example.tripbackend3.dto.request.ImageRequestDto;
+import com.example.tripbackend3.dto.response.CommentDto;
+import com.example.tripbackend3.dto.response.PostAllResponseDto;
+import com.example.tripbackend3.dto.response.PostOneResponseDto;
+import com.example.tripbackend3.dto.response.PostReceiveDto;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;

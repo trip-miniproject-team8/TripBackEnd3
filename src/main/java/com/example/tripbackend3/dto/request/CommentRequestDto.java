@@ -1,4 +1,4 @@
-package com.example.tripbackend3.dto;
+package com.example.tripbackend3.dto.request;
 
 import com.example.tripbackend3.entity.User;
 import lombok.AllArgsConstructor;

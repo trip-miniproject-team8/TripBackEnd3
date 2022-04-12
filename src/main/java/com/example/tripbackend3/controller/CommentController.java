@@ -1,12 +1,10 @@
 package com.example.tripbackend3.controller;
 
-import com.example.tripbackend3.dto.CommentDto;
 import com.example.tripbackend3.dto.CommentRequestDto;
-import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.repository.CommentRepository;
 import com.example.tripbackend3.repository.PostRepository;
+import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
-import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,7 @@ public class CommentController {
 
 
     @PostMapping("/api/comment/{postId}")
-    public void createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails,@PathVariable Long postId){
+    public void createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
 //        System.out.println(userDetails.getUsername());
 //        postRepository.findById(postId).orElseThrow(
 //                () -> new IllegalArgumentException("null")

@@ -1,5 +1,4 @@
-package com.example.tripbackend3.service;
-
+package com.example.tripbackend3.security;
 
 
 import com.example.tripbackend3.entity.User;

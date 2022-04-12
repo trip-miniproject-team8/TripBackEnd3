@@ -1,18 +1,16 @@
 package com.example.tripbackend3.controller;
 
-import com.example.tripbackend3.dto.CommentRequestDto;
 import com.example.tripbackend3.dto.PostAllResponseDto;
 import com.example.tripbackend3.dto.PostOneResponseDto;
 import com.example.tripbackend3.dto.PostReceiveDto;
+import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;
-import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor

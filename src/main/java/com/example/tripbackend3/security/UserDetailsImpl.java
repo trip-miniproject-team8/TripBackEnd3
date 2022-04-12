@@ -1,19 +1,18 @@
-package com.example.tripbackend3.service;
-
+package com.example.tripbackend3.security;
 
 
 import com.example.tripbackend3.entity.User;
 import com.example.tripbackend3.entity.UserRoleEnum;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
-//@Primary
+
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
@@ -26,11 +25,7 @@ public class UserDetailsImpl implements UserDetails {
         return user;
     }
 
-
-    public String getUserNickName() {
-        return user.getUserNickname();
-    }
-
+    public String getNickName() { return user.getUserNickname();}
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -61,20 +56,18 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        UserRoleEnum userRole = user.getRole();
-//        String authority = userRole.getAuthority();
-//
-//        SimpleGrantedAuthority simpleAuthority = new SimpleGrantedAuthority(authority);
-//        Collection<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(simpleAuthority);
-//
-//        return authorities;
-//    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
+
+
+
+
         return null;
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return null;
+//    }
 }

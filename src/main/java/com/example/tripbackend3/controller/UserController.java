@@ -1,21 +1,16 @@
 package com.example.tripbackend3.controller;
 
 import com.example.tripbackend3.dto.*;
-import com.example.tripbackend3.dto.response.Message;
-import com.example.tripbackend3.dto.response.SignupResponseDto;
 import com.example.tripbackend3.entity.User;
-import com.example.tripbackend3.service.UserDetailsImpl;
+import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +26,8 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -41,29 +38,29 @@ public class UserController {
 //    public User login(@RequestBody LoginDto loginDto) {
 //        return userService.login(loginDto);
 //    }
-
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public AuthenticationToken login(
-            @RequestBody AuthenticationRequest authenticationRequest,
-            HttpSession session
-    ) {
-        String username = authenticationRequest.getUsername();
-        String password = authenticationRequest.getPassword();
-        ..
-        //AuthenticationFilter
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        System.out.println(token.isAuthenticated());
-
-        Authentication authentication = authenticationManager.authenticate(token);
-        System.out.println(authentication.isAuthenticated());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                SecurityContextHolder.getContext());
-        User user = userService.readUser(username);
-        return new AuthenticationToken(user.getUsername(), Collections.singleton(user.getUserNickname()), session.getId());
-    }
+//
+//    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+//    public AuthenticationToken login(
+//            @RequestBody AuthenticationRequest authenticationRequest,
+//            HttpSession session
+//    ) {
+//        String username = authenticationRequest.getUsername();
+//        String password = authenticationRequest.getPassword();
+//
+//        //AuthenticationFilter
+//
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+//        System.out.println(token.isAuthenticated());
+//
+//        Authentication authentication = authenticationManager.authenticate(token);
+//        System.out.println(authentication.isAuthenticated());
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+//                SecurityContextHolder.getContext());
+//        User user = userService.readUser(username);
+//        return new AuthenticationToken(user.getUsername(), Collections.singleton(user.getUserNickname()), session.getId());
+//    }
 
     //회원가입 (2022.04.11 api 설계서 )
     @PostMapping("/api/signup")
@@ -90,7 +87,7 @@ public class UserController {
     }
 
     //로그인 여부 확인.
-    @GetMapping("/api/islogin")
+    @PostMapping("/api/islogin")
     public LoginDto checkLogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         LoginDto loginDto = new LoginDto();
 

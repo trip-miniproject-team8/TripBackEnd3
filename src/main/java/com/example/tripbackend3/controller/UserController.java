@@ -26,41 +26,10 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    // 로그인
-//    @PostMapping("/user/login")
-//    public User login(@RequestBody LoginDto loginDto) {
-//        return userService.login(loginDto);
-//    }
-//
-//    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-//    public AuthenticationToken login(
-//            @RequestBody AuthenticationRequest authenticationRequest,
-//            HttpSession session
-//    ) {
-//        String username = authenticationRequest.getUsername();
-//        String password = authenticationRequest.getPassword();
-//
-//        //AuthenticationFilter
-//
-//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-//        System.out.println(token.isAuthenticated());
-//
-//        Authentication authentication = authenticationManager.authenticate(token);
-//        System.out.println(authentication.isAuthenticated());
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-//                SecurityContextHolder.getContext());
-//        User user = userService.readUser(username);
-//        return new AuthenticationToken(user.getUsername(), Collections.singleton(user.getUserNickname()), session.getId());
-//    }
 
     //회원가입 (2022.04.11 api 설계서 )
     @PostMapping("/api/signup")
@@ -68,16 +37,6 @@ public class UserController {
         userService.registerUser(requestDto);
     }
 
-    //Msg Test
-//    @PostMapping("/api/signup")
-//    public SignupResponseDto registerUser(@Valid @RequestBody SignupRequestDto requestDto, Errors errors){
-//        try {
-//            userService.registerUser(requestDto);
-//        } catch (IllegalArgumentException e){
-//            SignupResponseDto
-//        }
-//
-//    }
 
     //아이디 중복 검사
     @PostMapping("/api/idCheck")
@@ -92,7 +51,7 @@ public class UserController {
         LoginDto loginDto = new LoginDto();
 
         if (userDetails == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("로그인 한 ");
         } else {
             loginDto.setUsername(userDetails.getUsername());
             return loginDto;

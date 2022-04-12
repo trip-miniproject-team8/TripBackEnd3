@@ -1,8 +1,7 @@
 package com.example.tripbackend3.controller;
 
-import com.example.tripbackend3.dto.CommentRequestDto;
+import com.example.tripbackend3.dto.request.CommentRequestDto;
 import com.example.tripbackend3.repository.CommentRepository;
-import com.example.tripbackend3.repository.PostRepository;
 import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,7 @@ public class CommentController {
 
     @PostMapping("/api/comment/{postId}")
     public void createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long postId){
-//        System.out.println(userDetails.getUsername());
-//        postRepository.findById(postId).orElseThrow(
-//                () -> new IllegalArgumentException("null")
-//        );
-//        requestDto.setUserNickname(userDetails.getUserNickName());
+
         if(userDetails.getUser()==null){
             throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
         }

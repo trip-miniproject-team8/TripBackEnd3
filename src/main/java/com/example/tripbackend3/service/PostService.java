@@ -1,8 +1,6 @@
 package com.example.tripbackend3.service;
 
-import com.example.tripbackend3.dto.PostAllResponseDto;
-import com.example.tripbackend3.dto.PostOneResponseDto;
-import com.example.tripbackend3.dto.PostReceiveDto;
+import com.example.tripbackend3.dto.*;
 import com.example.tripbackend3.entity.Comment;
 import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.entity.User;
@@ -27,17 +25,26 @@ public class PostService {
     private final CommentRepository commentRepository;
     //게시물 저장
     //user는 userDetailsImpl에서 로그인한 user 객체!
-    public void savePost(PostReceiveDto postReceiveDto, User user){
+    public void savePost(PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto, User user){
 
         String userNickname=user.getUserNickname();
-        String imageUrl=postReceiveDto.getImageUrl();
+        String imageUrl=imageRequestDto.getImageUrl();
+        System.out.println("url_test:"+imageUrl);
         String content=postReceiveDto.getContent();
+
         int commentCtn=postReceiveDto.getCommentCtn();
         //댓글은 코멘트 쪽에서 add
         //아래 생성자에를 통해 정보 주입(댓글수 기본값 0, 댓글 null로 저장)
-        postReceiveDto=new PostReceiveDto(userNickname, content, imageUrl, commentCtn);
-        Post post=new Post(postReceiveDto,user);
+        postReceiveDto=new PostReceiveDto(userNickname, content, commentCtn);
+        Post post=new Post(postReceiveDto, imageRequestDto, user);
+        System.out.println(imageUrl);
+        System.out.println(userNickname);
+        System.out.println(content);
         postRepository.save(post);
+
+        //초기화
+        imageRequestDto.setImageUrl("");
+        System.out.println("초기화후:"+imageRequestDto.getImageUrl());
     }
 
     //전체 게시글 조회
@@ -45,8 +52,10 @@ public class PostService {
         List<Post> postList = postRepository.findAll();
         List<PostAllResponseDto> posts=new ArrayList<>();
         for(Post post:postList){
+            List<Comment> commentList=commentRepository.findAllByPost(post);
+            int commentCtn=commentList.size();
             PostAllResponseDto postAllDto=new PostAllResponseDto(post.getId(), post.getUserNickname(),
-                    post.getImageUrl(), post.getContent(), post.getCreatedAt(), post.getCommentCtn());
+                    post.getImageUrl(), post.getContent(), post.getCreatedAt(), commentCtn);
             posts.add(postAllDto);
         }
         return posts;
@@ -63,8 +72,15 @@ public class PostService {
         LocalDateTime createdAt=post.getCreatedAt();
         //댓글 쪽 repo에서 커스텀 필요
         //게시물 아이디에 해당하는 댓글이 다 나옴
-        List<Comment> comments=commentRepository.findAllByPost(post);
-        int commentCtn=comments.size();
+        List<Comment> commentList=commentRepository.findAllByPost(post);
+        int commentCtn=commentList.size();
+
+        List<CommentDto> comments=new ArrayList<>();
+        for(Comment comment:commentList){
+            CommentDto commentDto=new CommentDto(comment.getUserNickname(),comment.getComment(),comment.getCreatedAt());
+            comments.add(commentDto);
+        }
+
         PostOneResponseDto postOneResponseDto =
                 new PostOneResponseDto(postId,userNickname, imageUrl, content,createdAt, commentCtn, comments);
         return postOneResponseDto;
@@ -72,23 +88,23 @@ public class PostService {
 
     //게시글 수정
     @Transactional
-    public void updatePost(Long postId, PostReceiveDto postReceiveDto, User user){
+    public void updatePost(Long postId, PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto,User user){
 
-        Post post1= postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
+        Post post= postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
                 ()-> new IllegalArgumentException("게시물 작성자만 수정할 수 있습니다.")
         );
 
         //comment와 imageUrl만 프론트에서 줌
         String userNickname=user.getUserNickname();
         String content=postReceiveDto.getContent();
-        String imageUrl=postReceiveDto.getImageUrl();
+        String imageUrl=imageRequestDto.getImageUrl();
         //commentRepo에서 커스텀해줘야함
-        List<Comment> comments=commentRepository.findAllByPost(post1);
-
+        List<Comment> comments=commentRepository.findAllByPost(post);
         int commentCtn=comments.size();
-        postReceiveDto=new PostReceiveDto(userNickname,content,imageUrl,commentCtn);
-        Post post=new Post(postReceiveDto, user);
-        postRepository.save(post);
+        postReceiveDto=new PostReceiveDto(userNickname,content,commentCtn);
+        post.update(postReceiveDto,imageRequestDto, user);
+        //초기화
+        imageRequestDto.setImageUrl("");
     }
 
     //게시물 삭제

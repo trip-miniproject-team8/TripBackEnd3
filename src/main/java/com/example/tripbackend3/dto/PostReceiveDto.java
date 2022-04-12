@@ -12,13 +12,11 @@ public class PostReceiveDto {
 
     private String userNickname;
     private String content;
-    private String imageUrl;
     private int commentCtn;
 
-    public PostReceiveDto(String userNickname, String content, String imageUrl, int commentCtn){
+    public PostReceiveDto(String userNickname, String content, int commentCtn){
         this.userNickname=userNickname;
         this.content=content;
-        this.imageUrl=imageUrl;
         this.commentCtn=commentCtn; //기본값 0
 
     }

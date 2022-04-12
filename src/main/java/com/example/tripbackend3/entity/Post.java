@@ -1,5 +1,6 @@
 package com.example.tripbackend3.entity;
 
+import com.example.tripbackend3.dto.ImageRequestDto;
 import com.example.tripbackend3.dto.PostReceiveDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,10 +39,18 @@ public class Post extends Timestamped{
 
 
 
-    public Post(PostReceiveDto postReceiveDto, User user){
+    public Post(PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto, User user){
         this.userNickname=postReceiveDto.getUserNickname();
         this.content=postReceiveDto.getContent();
-        this.imageUrl=postReceiveDto.getImageUrl();
+        this.imageUrl=imageRequestDto.getImageUrl();
+        this.commentCtn=postReceiveDto.getCommentCtn();
+        this.user=user;
+    }
+
+    public void update(PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto,User user){
+        this.userNickname=postReceiveDto.getUserNickname();
+        this.content=postReceiveDto.getContent();
+        this.imageUrl= imageRequestDto.getImageUrl();
         this.commentCtn=postReceiveDto.getCommentCtn();
         this.user=user;
     }

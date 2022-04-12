@@ -20,6 +20,6 @@ public class PostOneResponseDto {
     private String content;
     private LocalDateTime createdAt;
     private int commentCtn;
-    private List<Comment> comments= new ArrayList<>();
+    private List<CommentDto> comments= new ArrayList<>();
 
 }

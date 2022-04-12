@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 public class Comment extends Timestamped{
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "COMMENT_ID")
     private Long id;

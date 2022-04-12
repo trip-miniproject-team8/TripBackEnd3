@@ -82,7 +82,7 @@ public class PostController {
 
     //    이미지 업로드
     @PostMapping("/api/image")
-    public ResponseEntity<String> updateUserImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> updateImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         System.out.println(multipartFile);
         String image = s3Uploader.uploadFile(multipartFile, "static");
         System.out.println("이미지유알엘"+image);

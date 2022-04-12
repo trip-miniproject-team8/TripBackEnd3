@@ -7,7 +7,6 @@ import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;
 import com.example.tripbackend3.service.S3Uploader;
-import com.example.tripbackend3.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +22,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final CommentService commentService;
     private final S3Uploader s3Uploader;
 
     //게시글 저장

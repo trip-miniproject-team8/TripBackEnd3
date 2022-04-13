@@ -72,6 +72,7 @@ public class PostService {
         String userNickname=post.getUserNickname();
         String imageUrl=post.getImageUrl();
         String content=post.getContent();
+
         LocalDateTime createdAt=post.getCreatedAt();
         //댓글 쪽 repo에서 커스텀 필요
         //게시물 아이디에 해당하는 댓글이 다 나옴

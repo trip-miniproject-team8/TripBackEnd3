@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CommentDto {
 
+
     private String userNickname;
     private String comment;
     private LocalDateTime createdAt;

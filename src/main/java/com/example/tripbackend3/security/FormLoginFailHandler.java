@@ -1,42 +1,59 @@
 package com.example.tripbackend3.security;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.authentication.AuthenticationServiceException;
+
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.aspectj.apache.bcel.classfile.SourceFile;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
 
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class FormLoginFailHandler implements AuthenticationFailureHandler {
 
-    private final ObjectMapper objectMapper;
-    private final String DEFAULT_FAILURE_URL = "/user/login";
-
-    @Autowired
-    public FormLoginFailHandler(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-//       String errorMsg = null;
 
-        if (exception instanceof AuthenticationServiceException) {
-            request.setAttribute("loginFailMsg", "존재하지 않는 사용자입니다.");
+        String errorMsg = "제발";
+
+        if(exception instanceof UsernameNotFoundException) {
+            errorMsg = "살려줘";
+
         }else if(exception instanceof BadCredentialsException) {
-            request.setAttribute("loginFailMsg", "아이디 또는 비밀번호가 틀립니다.");
+            errorMsg = "죽여줘";
         }
 
-        request.getRequestDispatcher(DEFAULT_FAILURE_URL).forward(request,response);
-    }
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
+        Map<String, Object> data = new HashMap<>();
+        System.out.println(errorMsg);
+        data.put(
+                "exception",
+                errorMsg);
+        System.out.println(exception.toString());
+        String str = new String(objectMapper.writeValueAsString(data).getBytes("UTF-8"), "ISO-8859-1");
+        response.getOutputStream()
+                .println(str);
+
+    }
 }
+

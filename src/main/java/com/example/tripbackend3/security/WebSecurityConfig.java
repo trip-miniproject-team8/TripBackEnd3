@@ -19,9 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JWTAuthProvider jwtAuthProvider;
     private final HeaderTokenExtractor headerTokenExtractor;
-    private final UserRepository userRepository;
+
     private  ObjectMapper objectMapper;
+    private UserRepository userRepository;
+
 
     public WebSecurityConfig(
             JWTAuthProvider jwtAuthProvider,
             HeaderTokenExtractor headerTokenExtractor,
-            UserRepository userRepository) {
+            ObjectMapper objectMapper) {
         this.jwtAuthProvider = jwtAuthProvider;
         this.headerTokenExtractor = headerTokenExtractor;
-        this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
+
     }
 
     @Bean
@@ -72,9 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 서버에서 인증은 JWT로 인증하기 때문에 Session의 생성을 막습니다.
         http
-                .httpBasic().disable()//rest api 만을 고려하여 기본 설정은 해제하겠습니다.
-                .exceptionHandling()
-                .and()
+//                .httpBasic().disable()//rest api 만을 고려하여 기본 설정은 해제하겠습니다.
+//                .exceptionHandling()
+//                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//토크 기반이라 세션 사용 해제.
 
@@ -95,7 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // [로그아웃 기능]
                 .logout()
                 // 로그아웃 요청 처리 URL
-                .logoutUrl("/user/logout")
+                .logoutUrl("/api/logout")
                 .permitAll()
                 .and()
                 .exceptionHandling()
@@ -105,11 +106,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public FormLoginFilter formLoginFilter() throws Exception {
-        FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager(), userRepository);
+        FormLoginFilter formLoginFilter = new FormLoginFilter(authenticationManager());
         formLoginFilter.setFilterProcessesUrl("/user/login");
         formLoginFilter.setAuthenticationSuccessHandler(formLoginSuccessHandler());
         formLoginFilter.setAuthenticationFailureHandler(formLoginFailHandler());
-
         formLoginFilter.afterPropertiesSet();
         return formLoginFilter;
     }
@@ -119,15 +119,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new FormLoginSuccessHandler();
     }
 
-
-//    public void setAuthenticationFailureHandler(AuthenticationFailureHandler failureHandler) {
-//        Assert.notNull(failureHandler, "failureHandler cannot be null");
-//        this.failureHandler = failureHandler;
-//    }
-
     @Bean
     public FormLoginFailHandler formLoginFailHandler(){
-        return new FormLoginFailHandler(objectMapper);
+        return new FormLoginFailHandler();
     }
 
 
@@ -149,7 +143,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 회원 관리 API 허용
         skipPathList.add("GET,/user/**");
         skipPathList.add("POST,/api/signup");
-        skipPathList.add("POST,/api/**");
+        skipPathList.add("POST,/api/logout");
+
+        //게시글 조회
+        skipPathList.add("GET,/api/post");
+        skipPathList.add("GET,/api/post/{postId}");
 
         skipPathList.add("GET,/");
         skipPathList.add("GET,/basic.js");

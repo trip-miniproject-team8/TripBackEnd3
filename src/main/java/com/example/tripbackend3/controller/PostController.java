@@ -4,6 +4,7 @@ import com.example.tripbackend3.dto.request.ImageRequestDto;
 import com.example.tripbackend3.dto.response.PostAllResponseDto;
 import com.example.tripbackend3.dto.response.PostOneResponseDto;
 import com.example.tripbackend3.dto.response.PostReceiveDto;
+import com.example.tripbackend3.entity.Post;
 import com.example.tripbackend3.security.UserDetailsImpl;
 import com.example.tripbackend3.service.CommentService;
 import com.example.tripbackend3.service.PostService;
@@ -82,7 +83,7 @@ public class PostController {
 
     //    이미지 업로드
     @PostMapping("/api/image")
-    public ResponseEntity<String> updateImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         System.out.println(multipartFile);
         String image = s3Uploader.uploadFile(multipartFile, "static");
         System.out.println("이미지유알엘"+image);
@@ -94,5 +95,7 @@ public class PostController {
                 .body(image);
 
     }
+
+
 
 }

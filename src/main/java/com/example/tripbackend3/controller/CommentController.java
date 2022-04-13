@@ -21,6 +21,9 @@ public class CommentController {
         if(userDetails.getUser()==null){
             throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
         }
+        if(requestDto.getComment().length()<1){
+            throw new IllegalArgumentException("댓글을 입력해주세요");
+        }
         commentService.createComment(postId,requestDto,userDetails.getUser());
     }
     @DeleteMapping("/api/comment/{commentId}")
@@ -28,5 +31,4 @@ public class CommentController {
         commentRepository.deleteById(commentId);
     }
 }
-
 // 테스트 한줄 추가

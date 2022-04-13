@@ -3,12 +3,14 @@ package com.example.tripbackend3.entity;
 import com.example.tripbackend3.dto.request.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
 @Entity
+@Setter
 public class Comment extends Timestamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

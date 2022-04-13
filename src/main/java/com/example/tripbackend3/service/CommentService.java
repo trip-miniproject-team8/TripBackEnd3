@@ -23,10 +23,10 @@ public class CommentService {
 
 
 
-    public void createComment(Long postId, CommentRequestDto requestDto,User user) {
+    public void createComment(Long postId, CommentRequestDto requestDto, User user) {
 
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalArgumentException("null")
+                () -> new IllegalArgumentException("게시글이 없습니다.")
         );
         Comment comment = new Comment(post,requestDto,user);
         commentRepository.save(comment);

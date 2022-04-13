@@ -57,7 +57,7 @@ public class PostService {
         for(Post post:postList){
             List<Comment> commentList=commentRepository.findAllByPost(post);
             int commentCtn=commentList.size();
-            PostAllResponseDto postAllDto=new PostAllResponseDto(post.getId(), post.getUserNickname(),
+            PostAllResponseDto postAllDto=new PostAllResponseDto(post.getId(), post.getUserNickname(), post.getUser().getUsername(),
                     post.getImageUrl(), post.getContent(), post.getCreatedAt(), commentCtn);
             posts.add(postAllDto);
         }
@@ -80,7 +80,7 @@ public class PostService {
 
         List<CommentDto> comments=new ArrayList<>();
         for(Comment comment:commentList){
-            CommentDto commentDto=new CommentDto(comment.getUserNickname(),comment.getComment(),comment.getCreatedAt());
+            CommentDto commentDto=new CommentDto(comment.getUserNickname(),comment.getComment(),comment.getCreatedAt(),comment.getId());
             comments.add(commentDto);
         }
 

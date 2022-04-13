@@ -54,4 +54,8 @@ public class Post extends Timestamped{
         this.commentCtn=postReceiveDto.getCommentCtn();
         this.user=user;
     }
+
+    public void updateImage(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
 }

@@ -16,6 +16,7 @@ public class CommentDto {
     private String userNickname;
     private String comment;
     private LocalDateTime createdAt;
+    private Long commentId;
 //    private String user;
 
 

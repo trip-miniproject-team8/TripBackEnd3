@@ -13,6 +13,7 @@ public class PostAllResponseDto {
 
     private Long id;
     private String userNickname;
+    private String username;
     private String imageUrl;
     private String content;
     private LocalDateTime createdAt;

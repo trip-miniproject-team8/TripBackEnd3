@@ -48,12 +48,12 @@ public class UserController {
     }
 
     //로그인 여부 확인.
-    @PostMapping("/api/islogin")
+    @GetMapping("/api/islogin")
     public LoginDto checkLogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         LoginDto loginDto = new LoginDto();
 
         if (userDetails == null) {
-            throw new NullPointerException("로그인 한 유저가 아닙니다. ");
+            throw new IllegalArgumentException ("로그인 한 유저가 아닙니다. ");
         } else {
             loginDto.setUsername(userDetails.getUsername());
             return loginDto;

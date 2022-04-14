@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Setter
@@ -26,33 +27,53 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-    //게시물 저장
+    //게시물 저장/수정
     //user는 userDetailsImpl에서 로그인한 user 객체!
-    public void savePost(PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto, User user){
-
+    @Transactional
+    public void savePost(Long postId,PostReceiveDto postReceiveDto, User user){
+        Optional<Post> postOptional=postRepository.findById(postId);
+        if(postOptional.isPresent()){
+            if(postOptional.get().getUser().getId() != user.getId()){
+                throw new IllegalArgumentException("게시물 작성자만 본문작성 및 수정이 가능합니다");
+            }
+        }else{
+            throw new IllegalArgumentException("이미지를 먼저 입력해주세요^^");
+        }
+        Post post=postRepository.findById(postId).orElseThrow(
+                ()->new IllegalArgumentException("이미지를 먼저 입력해주세요^^")
+        );
         String userNickname=user.getUserNickname();
-        String imageUrl=imageRequestDto.getImageUrl();
-        System.out.println("url_test:"+imageUrl);
+//        String imageUrl=imageRequestDto.getImageUrl();
+//        if(imageUrl==null){
+//            throw new NullPointerException("이미지를 첨부해주세요!");
+//        }
         String content=postReceiveDto.getContent();
-
+        if(content==null){
+            throw new NullPointerException("본문 내용을 작성해주세요");
+        }
         int commentCtn=postReceiveDto.getCommentCtn();
+
+
+
+        String imageUrl= postOptional.get().getImageUrl();
+        System.out.println("이미지url:"+imageUrl);
+
         //댓글은 코멘트 쪽에서 add
-        //아래 생성자에를 통해 정보 주입(댓글수 기본값 0, 댓글 null로 저장)
+        //(댓글수 기본값 0, 댓글 null로 저장)
         postReceiveDto=new PostReceiveDto(userNickname, content, commentCtn);
-        Post post=new Post(postReceiveDto, imageRequestDto, user);
-        System.out.println(imageUrl);
+
+        postOptional.get().updateExceptImage(postReceiveDto, user);
+//        post.updateExceptImage(postReceiveDto, user);
+//        System.out.println(imageUrl);
         System.out.println(userNickname);
         System.out.println(content);
         postRepository.save(post);
-
-        //초기화
-        imageRequestDto.setImageUrl("");
-        System.out.println("초기화후:"+imageRequestDto.getImageUrl());
+        postRepository.deleteAllByUserNicknameNull();
     }
 
     //전체 게시글 조회
     public List<PostAllResponseDto> showAllPost() {
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findAllByUserNicknameNotNullOrderByCreatedAtDesc();
         List<PostAllResponseDto> posts=new ArrayList<>();
         for(Post post:postList){
             List<Comment> commentList=commentRepository.findAllByPost(post);
@@ -89,26 +110,30 @@ public class PostService {
         return postOneResponseDto;
     }
 
-    //게시글 수정
-    @Transactional
-    public void updatePost(Long postId, PostReceiveDto postReceiveDto, ImageRequestDto imageRequestDto,User user){
-
-        Post post= postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
-                ()-> new IllegalArgumentException("게시물 작성자만 수정할 수 있습니다.")
-        );
-
-        //comment와 imageUrl만 프론트에서 줌
-        String userNickname=user.getUserNickname();
-        String content=postReceiveDto.getContent();
-        String imageUrl=imageRequestDto.getImageUrl();
-        //commentRepo에서 커스텀해줘야함
-        List<Comment> comments=commentRepository.findAllByPost(post);
-        int commentCtn=comments.size();
-        postReceiveDto=new PostReceiveDto(userNickname,content,commentCtn);
-        post.update(postReceiveDto,imageRequestDto, user);
-        //초기화
-        imageRequestDto.setImageUrl("");
-    }
+//    //게시글 수정
+//    @Transactional
+//    public void updatePost(Long postId, PostReceiveDto postReceiveDto,User user){
+//
+//        Post post= postRepository.findByIdAndUserId(postId,user.getId()).orElseThrow(
+//                ()-> new IllegalArgumentException("게시물 작성자만 수정할 수 있습니다.")
+//        );
+//
+//        String userNickname=user.getUserNickname();
+//        String content=postReceiveDto.getContent();
+//        if(content==null){
+//            throw new NullPointerException("내용을 입력해주세요!");
+//        }
+//        if(post.getImageUrl() ==null){
+//            throw new NullPointerException("이미지를 입력해주세요");
+//        }
+//
+//        //commentRepo에서 커스텀해줘야함
+//        List<Comment> comments=commentRepository.findAllByPost(post);
+//        int commentCtn=comments.size();
+//        postReceiveDto=new PostReceiveDto(userNickname,content,commentCtn);
+//        post.updateExceptImage(postReceiveDto, user);
+//
+//    }
 
     //게시물 삭제
     @Transactional

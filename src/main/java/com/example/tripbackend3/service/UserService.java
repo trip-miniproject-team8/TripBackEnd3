@@ -62,7 +62,9 @@ public class UserService {
         if(!requestDto.getPassword().matches("^[a-z0-9-_]{4,10}$")){
             throw new IllegalArgumentException("비빌번호는 영어와 숫자로 4~12 자리로 입력하셔야 합니다!");
         }
-
+        if(!requestDto.getUserNickname().matches("^[a-zA-Z0-9ㄱ-ㅎ가-힣_]{2,10}$")){
+            throw new IllegalArgumentException("닉네임은 특수문자 제외한 2글자이상 10글자 이내 완성된 글자여야합니다.");
+        }
 
         User user = new User(username, password,userNickname);
        return userRepository.save(user);

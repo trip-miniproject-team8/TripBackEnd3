@@ -13,34 +13,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.metamodel.Metamodel;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-//@Transactional
+
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
 
     @Autowired
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-
-   //회원가입 (2022.04.11 api 설계서 )
-//    public void registerUser(SignupRequestDto requestDto) {
-//
-//        String username = requestDto.getUsername();
-//        String password = passwordEncoder.encode(requestDto.getPassword());
-//        String userNickname = requestDto.getUserNickname();
-//
-//        User user = new User(username, password,userNickname);
-//        userRepository.save(user);
-//    }
 
     //회원가입 수정 .
     @Transactional
@@ -62,6 +53,8 @@ public class UserService {
         if(!requestDto.getPassword().matches("^[a-z0-9-_]{4,10}$")){
             throw new IllegalArgumentException("비빌번호는 영어와 숫자로 4~12 자리로 입력하셔야 합니다!");
         }
+
+
 
 
         User user = new User(username, password,userNickname);

@@ -36,10 +36,10 @@ public class FormLoginFailHandler implements AuthenticationFailureHandler {
         String errorMsg = "제발";
 
         if(exception instanceof UsernameNotFoundException) {
-            errorMsg = "살려줘";
+            errorMsg = "존재하지 않는 아이디 입니다.";
 
         }else if(exception instanceof BadCredentialsException) {
-            errorMsg = "죽여줘";
+            errorMsg = "비밀번호가 맞지 않습니다.";
         }
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
